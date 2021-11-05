@@ -162,6 +162,10 @@ function initLogin(app: express.Application) {
   );
 }
 
+// logout function
+// TODO:
+// check route, unset cookies, and unset the logged in variable
+
 /**
  * get session validator based on `login` flag
  */
