@@ -44,7 +44,7 @@ const port = process.argv[3] || 3000;
 
 const apiServerAddress = `http://${MLX_API_ENDPOINT}`;
 
-const disableLogin = REACT_APP_DISABLE_LOGIN === 'true';
+var disableLogin = REACT_APP_DISABLE_LOGIN === 'true';
 
 type User = {
   username: string;
@@ -101,6 +101,20 @@ var limiter = new ratelimit({
   windowMs: 1*60*1000, // 1 minute
   max: 5
 });
+
+// logout function
+// TODO:
+// check route, unset cookies, and unset the logged in variable
+//
+
+app.get('/logout', (req, res) => {
+    console.log("logout");
+    disableLogin = false;
+    req.logout();
+    res.redirect("/"); 
+});
+
+//
 
 app.get('*', limiter, (req, res) => {
   // TODO: look into caching this file to speed up multiple requests.
@@ -160,11 +174,16 @@ function initLogin(app: express.Application) {
       res.redirect(redirectPath);
     }
   );
+  app.get([REACT_APP_BASE_PATH + '/logout'], passport.authenticate('basic'), (req, res) => {
+    console.log("logout");
+    disableLogin = false;
+    // passportjs recommended way of logging out
+    req.logout();
+    res.redirect("/"); 
+
+  });
 }
 
-// logout function
-// TODO:
-// check route, unset cookies, and unset the logged in variable
 
 /**
  * get session validator based on `login` flag
