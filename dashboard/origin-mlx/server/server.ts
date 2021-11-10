@@ -107,11 +107,11 @@ var limiter = new ratelimit({
 // check route, unset cookies, and unset the logged in variable
 //
 
-app.get('/logout', (req, res) => {
+app.get('/logout', limiter, (req, res) => {
     console.log("logout");
     disableLogin = false;
     req.logout();
-    res.redirect("/"); 
+    res.redirect("/");
 });
 
 //
@@ -179,7 +179,7 @@ function initLogin(app: express.Application) {
     disableLogin = false;
     // passportjs recommended way of logging out
     req.logout();
-    res.redirect("/"); 
+    res.redirect("/");
 
   });
 }
