@@ -111,9 +111,7 @@ app.get('/logout', limiter, (req, res) => {
     console.log("logout");
     disableLogin = false;
 // read the cookies
-    console.dir(req.cookies);
-    req.logout();
-    res.redirect("/");
+    console.dir(req.cookies); // testing with cookies
 });
 
 //
@@ -176,6 +174,8 @@ function initLogin(app: express.Application) {
       res.redirect(redirectPath);
     }
   );
+  /*
+  // probably unnecessary,move to get earlier
   app.get([REACT_APP_BASE_PATH + '/logout'], passport.authenticate('basic'), (req, res) => {
     console.log("logout");
     disableLogin = false;
@@ -184,6 +184,7 @@ function initLogin(app: express.Application) {
     res.redirect("/");
 
   });
+  */
 }
 
 
