@@ -110,6 +110,8 @@ var limiter = new ratelimit({
 app.get('/logout', limiter, (req, res) => {
     console.log("logout");
     disableLogin = false;
+// read the cookies
+    console.dir(req.cookies);
     req.logout();
     res.redirect("/");
 });
